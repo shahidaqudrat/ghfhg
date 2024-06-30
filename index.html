@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ummas Vocational Institute Registration</title>
+    <style>
+        form {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="fathersName">Father's Name:</label>
+        <input type="text" id="fathersName" name="fathersName" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="cnic">CNIC Number:</label>
+        <input type="text" id="cnic" name="cnic" required>
+
+        <label for="screenshot">Screenshot:</label>
+        <input type="file" id="screenshot" name="screenshot" accept="image/*" required>
+
+        <label for="fees">Fees:</label>
+        <input type="number" id="fees" name="fees" required>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function submitForm() {
+            // Get form data
+            const form = document.getElementById('registrationForm');
+            const formData = new FormData(form);
+
+            // Convert form data to an object
+            const data = {};
+            formData.forEach((value, key) => {
+                if (key === 'screenshot') {
+                    // Handle file separately
+                    const file = formData.get('screenshot');
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        data[key] = event.target.result;
+                        logData(data); // Log data after file is read
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    data[key] = value;
+                }
+            });
+        }
+
+        // Log data to console (or send it to a server)
+        function logData(data) {
+            console.log(data);
+        }
+    </script>
+</body>
+</html>
+
